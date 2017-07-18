@@ -22,7 +22,7 @@ module Parser
 
   class Manager
     def process
-      page_url = 'https://staqresults.herokuapp.com'
+      page_url = 'https://staqresults.staq.com'
       handler = RequestHandler.new
       responder = ResponseProcessor.new
       results = handler.process(page_url)
@@ -34,7 +34,7 @@ module Parser
     attr_accessor :config
 
     def initialize(config = Configuration.new)
-      @agent = Mechanize.new
+      @agent = Mechanize.new{ |a| a.ssl_version, a.verify_mode = 'TLSv1_2', OpenSSL::SSL::VERIFY_NONE }
       @config = config
     end
 
